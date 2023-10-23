@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-import 'package:instragram_clone/provider/auth_provider.dart';
 import 'package:instragram_clone/res/component/app_images.dart';
 import 'package:instragram_clone/res/component/elevatedbutton.dart';
 import 'package:instragram_clone/utils/routes/routes_name.dart';

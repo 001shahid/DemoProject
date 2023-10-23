@@ -86,16 +86,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (_formKey.currentState!.validate()) {
                           // Form is valid, continue with your login logic
 
-
                           Map<String, dynamic> data = {
- //"username": usernameController.text,
- "email": emailController.text,
- "password": passwordController.text,
- };
- authViewModel.loginApi(data, context);
- print("api hit");
- debugPrint(emailController.text);
- debugPrint(passwordController.text);
+                            //"username": usernameController.text,
+                            "email": emailController.text,
+                            "password": passwordController.text,
+                          };
+                          authViewModel.loginApi(data, context);
+                          print("api hit");
+                          debugPrint(emailController.text);
+                          debugPrint(passwordController.text);
                         }
                       },
                     ),

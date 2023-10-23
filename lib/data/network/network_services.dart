@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:instragram_clone/data/network/base_api_services.dart';
@@ -11,7 +12,7 @@ class NetworkApiService extends BaseApiServices {
     dynamic responseJson;
     try {
       final response =
-          await http.get(Uri.parse(url)).timeout(Duration(seconds: 10));
+          await http.get(Uri.parse(url)).timeout(const Duration(seconds: 10));
 
       responseJson = returnResponse(response);
     } on SocketException {
@@ -32,7 +33,7 @@ class NetworkApiService extends BaseApiServices {
             body: jsonEncode(data),
             headers: header,
           )
-          .timeout(Duration(seconds: 10));
+          .timeout(const Duration(seconds: 10));
       responseJson = returnResponse(response);
     } on SocketException {
       debugPrint(responseJson.toString());
@@ -50,9 +51,8 @@ class NetworkApiService extends BaseApiServices {
           await http.post(Uri.parse(url), body: jsonEncode(data), headers: {
         'Authorization': 'Basic c29jYWlsTWVkaWE6c29jaWFsQDEyMw==',
         'Content-Type': 'application/json; charset=UTF-8'
-      }).timeout(Duration(seconds: 10));
+      }).timeout(const Duration(seconds: 10));
       responseJson = returnResponse(response);
-    
     } on SocketException {
       throw FetchDataException("No Internet Connection");
     }
@@ -70,6 +70,9 @@ class NetworkApiService extends BaseApiServices {
         debugPrint(responseJson.toString());
         throw BadRequestException(responseJson['error'] ?? 'Bad Request');
       case 401:
+        debugPrint(responseJson.toString());
+        debugPrint(responseJson.toString());
+
         throw UnauthorisedException(responseJson['error'] ?? 'Unauthorized');
       case 404:
         throw NotFoundException(responseJson['error'] ?? 'NotFoundException');
