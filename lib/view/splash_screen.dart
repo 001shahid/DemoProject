@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:instragram_clone/view/tutorial1.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SpalshScreen extends StatefulWidget {
   const SpalshScreen({super.key});
@@ -13,6 +14,7 @@ class _SpalshScreenState extends State<SpalshScreen> {
   @override
   void initState() {
     super.initState();
+
     _navigateTutorail();
   }
 

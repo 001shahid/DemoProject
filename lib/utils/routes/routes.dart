@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:instragram_clone/utils/routes/routes_name.dart';
 import 'package:instragram_clone/view/home_page_screen.dart';
 import 'package:instragram_clone/view/login_page.dart';
+import 'package:instragram_clone/view/new_password_screen.dart';
 import 'package:instragram_clone/view/sign_up_page.dart';
 import 'package:instragram_clone/view/verify_User_Screen.dart';
-
 
 class Routes {
   // ignore: non_constant_identifier_names
@@ -38,12 +38,12 @@ class Routes {
         return MaterialPageRoute(
             builder: (BuildContext context) => const SignUpScreen());
 
-
-
-             case RoutesName.home:
+      case RoutesName.home:
         return MaterialPageRoute(
             builder: (BuildContext context) => const HomePage());
-
+      case RoutesName.changerPassword:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const NewPassword());
       // case RoutesName.otp:
       //   if (settings.arguments != null) {
       //     return MaterialPageRoute(

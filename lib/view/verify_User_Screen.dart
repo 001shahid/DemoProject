@@ -162,7 +162,8 @@ class _VerifyUserState extends State<VerifyUser> {
                                               emailController.text.toString(),
                                           "otp": otpController.text.toString(),
                                         };
-                                        authViewModel3.verifyOtp(data, context);
+                                        authViewModel3.verifyForgetApi(
+                                            data, context);
                                       } else {
                                         Utils.toastMessage("OTP is required");
                                       }

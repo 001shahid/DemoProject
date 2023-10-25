@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:instragram_clone/provider/password_provider.dart';
 import 'package:instragram_clone/res/component/elevatedbutton.dart';
+import 'package:instragram_clone/view_model/widget/auth_view_model.dart';
 import 'package:instragram_clone/view_model/widget/custom.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +31,7 @@ class _NewPasswordState extends State<NewPassword> {
 
   @override
   Widget build(BuildContext context) {
+    final authViewModel = Provider.of<AuthViewModel>(context);
     debugPrint("bbfs");
     return Scaffold(
       body: Form(
@@ -40,7 +41,6 @@ class _NewPasswordState extends State<NewPassword> {
           children: [
             Lottie.asset(
               "Assets/animations/animation_lnr7lw6j (1).json",
-             
               height: MediaQuery.of(context).size.height * 0.3,
             ),
             Container(
@@ -125,6 +125,9 @@ class _NewPasswordState extends State<NewPassword> {
                     onPress: () {
                       if (formkey.currentState!.validate()) {
                         // Handle button press
+                        Map data = {"newPassword": passwordController.text};
+
+                        authViewModel.resetPassword(data, context);
                       }
                     },
                   ),

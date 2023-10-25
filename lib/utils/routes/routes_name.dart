@@ -8,6 +8,7 @@ class RoutesName {
   static const String  otp = 'OTP';
    static const String  signupscreen = 'SignUpScreen';
    static const String  home = 'HomePage';
+    static const String  changerPassword = 'NewPassword';
   // static const String  tutorial1 = 'TutorialScreen1';
 
   

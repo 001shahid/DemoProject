@@ -23,10 +23,14 @@ class CustomRoundButton extends StatelessWidget {
         height: 50,
         width: 200,
         child: Center(
-            child: Text(title,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.googlelogin))),
+            child: loading
+                ? CircularProgressIndicator(
+                    color: Colors.white,
+                  )
+                : Text(title,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.googlelogin))),
         // child: Center(
         //     child: loading
         //         ? CircularProgressIndicator()

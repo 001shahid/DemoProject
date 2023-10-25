@@ -49,7 +49,7 @@ class NetworkApiService extends BaseApiServices {
     try {
       final response =
           await http.post(Uri.parse(url), body: jsonEncode(data), headers: {
-        'Authorization': 'Basic c29jYWlsTWVkaWE6c29jaWFsQDEyMw==',
+        'Authorization': 'Basic c29jaWFsTWVkaWE6c29jaWFsQDEyMw==',
         'Content-Type': 'application/json; charset=UTF-8'
       }).timeout(const Duration(seconds: 10));
       responseJson = returnResponse(response);
@@ -71,13 +71,14 @@ class NetworkApiService extends BaseApiServices {
         throw BadRequestException(responseJson['error'] ?? 'Bad Request');
       case 401:
         debugPrint(responseJson.toString());
-        debugPrint(responseJson.toString());
 
         throw UnauthorisedException(responseJson['error'] ?? 'Unauthorized');
       case 404:
+        debugPrint(responseJson.toString());
         throw NotFoundException(responseJson['error'] ?? 'NotFoundException');
 
       default:
+        debugPrint(responseJson.toString());
         throw FetchDataException(
             'Error occurred while communicating with the server with status code ${response.toString()}');
     }

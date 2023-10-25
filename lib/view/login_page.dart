@@ -82,7 +82,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: MediaQuery.of(context).size.height * .055,
                     child: CustomRoundButton(
                       title: "Login",
+                      loading: authViewModel.loading,
                       onPress: () {
+                        
                         if (_formKey.currentState!.validate()) {
                           // Form is valid, continue with your login logic
 

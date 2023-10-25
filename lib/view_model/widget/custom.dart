@@ -5,7 +5,7 @@ class CustomTextFormField extends StatelessWidget {
   final String? label;
   final TextEditingController controller;
   final TextInputType keyboardType;
-  final IconData prefixIcon;
+  final IconData? prefixIcon;
   final Widget? suffixIcon;
   final VoidCallback? onTap;
   final bool obscureText;
@@ -22,7 +22,7 @@ class CustomTextFormField extends StatelessWidget {
     this.label,
     required this.controller,
     this.keyboardType = TextInputType.text,
-    required this.prefixIcon,
+     this.prefixIcon,
     this.obscureText = false,
     this.onChanged,
     this.onSubmitted,

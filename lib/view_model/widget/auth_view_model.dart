@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:instragram_clone/respository/shared_perfrence.dart';
 import 'package:instragram_clone/utils/routes/routes_name.dart';
 import 'package:instragram_clone/view/home_page_screen.dart';
+import 'package:instragram_clone/view/otp_page.dart';
 import '../../respository/auth_respository.dart';
 import '../../utils/utils.dart';
 
@@ -29,7 +31,8 @@ class AuthViewModel with ChangeNotifier {
   }
 
 //***************************************SignUpApi*********************************************//
-  Future<void> signupApi(dynamic data, BuildContext context) async {
+  Future<void> signupApi(
+      dynamic data, String email, BuildContext context) async {
     //setsignupLoading(true);
     setLoading(true);
     //data = {"username" : "Shahid@1", "password":"Shahid@1" ,"email": "zaynkhan384@gmail.com"};
@@ -37,6 +40,9 @@ class AuthViewModel with ChangeNotifier {
       //  setsignupLoading(false);
       setLoading(false);
       Utils.flashBarErrorMessage('signup successful', context);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => OTP(userData: email)));
+
       debugPrint(value.toString());
 
       // Navigator.pushNamed(context, RoutesName.otp);
@@ -78,38 +84,7 @@ class AuthViewModel with ChangeNotifier {
       }
     });
   }
-  // Future<void> verifyOtp(dynamic data, BuildContext context) async {
-  //   setLoading(true);
-  //   // Assume your API endpoint for OTP verification is named 'verifyOtp'
-  //   // Modify the API call according to your backend setup
 
-  //   _myRepo.verifyOtpApi(data).then((bool isOtpValid) {
-  //     setLoading(false);
-
-  //     if (isOtpValid) {
-  //       Utils.flashBarErrorMessage('OTP verified successfully', context);
-
-  //       // Navigate to the next screen after OTP verification
-  //       // Navigator.pushNamed(context, RoutesName.resetPassword);
-  //       //debugPrint(data.toString());
-
-  //       Navigator.pushAndRemoveUntil(
-  //           context,
-  //           MaterialPageRoute(builder: (context) => HomePage()),
-  //           (route) => false);
-  //     } else {
-  //       // debugPrint("isOtpValid: $isOtpValid");
-
-  //       Utils.flashBarErrorMessage('Invalid OTP. Please try again.', context);
-  //     }
-  //   }).onError((error, stackTrace) {
-  //     setLoading(false);
-  //     Utils.flashBarErrorMessage('Error verifying OTP: $error', context);
-  //     if (kDebugMode) {
-  //       print(error.toString());
-  //     }
-  //   });
-  // }
 //***************************************ResendOtpApi*********************************************//
 
   Future<void> resendOtp(dynamic data, BuildContext context) async {
@@ -133,10 +108,9 @@ class AuthViewModel with ChangeNotifier {
     setLoading(true);
     _myRepo.loginapi(data).then((value) {
       debugPrint(value.toString());
-      setLoading(false);
 
       Utils.flashBarErrorMessage('login successful', context);
-
+      setLoading(false);
       Navigator.pushNamedAndRemoveUntil(
           context, RoutesName.home, (route) => false);
       if (kDebugMode) {
@@ -169,5 +143,80 @@ class AuthViewModel with ChangeNotifier {
         print(error.toString());
       }
     });
+  }
+
+  //***************************************ResetPasswordApi*********************************************//
+  Future<void> resetPassword(dynamic data, BuildContext context) async {
+    setLoading(true);
+    debugPrint("fdghjkljgfgc");
+    debugPrint(data.toString());
+
+    try {
+      _myRepo.resetPasswordApi(data).then((_) {
+        setLoading(false);
+        Utils.flashBarErrorMessage('Password reset successful', context);
+        Navigator.pushNamedAndRemoveUntil(
+            context, RoutesName.login, (routes) => false);
+      }).onError((error, stackTrace) {
+        setLoading(false);
+        Utils.flashBarErrorMessage('Error resetting password: $error', context);
+        if (kDebugMode) {
+          print(error.toString());
+        }
+      });
+    } catch (error) {
+      setLoading(false);
+      Utils.flashBarErrorMessage('Error obtaining authToken: $error', context);
+      if (kDebugMode) {
+        print(error.toString());
+      }
+    }
+  }
+
+  //***************************************VerifyOtpForgetApi*********************************************//
+  Future<void> verifyForgetApi(dynamic data, BuildContext context) async {
+    setLoading(true);
+    // Assume your API endpoint for OTP verification is named 'verifyOtp'
+    // Modify the API call according to your backend setup
+    _myRepo.verifyOtpApiforget(data).then((bool isOtpValid) {
+      setLoading(false);
+      if (isOtpValid) {
+        Utils.flashBarErrorMessage('OTP verified successfully', context);
+        // Navigate to the next screen after OTP verification
+        // Navigator.pushNamed(context, RoutesName.home);
+        Navigator.pushNamedAndRemoveUntil(
+            context, RoutesName.changerPassword, (route) => false);
+      } else {
+        Utils.flashBarErrorMessage('Invalid OTP. Please try again.', context);
+      }
+    }).onError((error, stackTrace) {
+      setLoading(false);
+      Utils.flashBarErrorMessage('Error verifying OTP: $error', context);
+      if (kDebugMode) {
+        print(error.toString());
+      }
+    });
+  }
+
+  //***************************************LogoutApi*********************************************//
+  Future<void> logout(BuildContext context) async {
+    String? authToken = await SharedPreferencesManager.getLoginToken();
+    setLoading(true);
+
+    try {
+      await _myRepo.logoutApi(authToken);
+
+      // Navigate to the login screen after successful logout
+      Navigator.pushNamedAndRemoveUntil(
+          context, RoutesName.login, (routes) => false);
+
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      Utils.flashBarErrorMessage('Error during logout: $error', context);
+      if (kDebugMode) {
+        print(error.toString());
+      }
+    }
   }
 }

@@ -149,7 +149,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onPress: () {
                         //loading
                         if (_formKey.currentState!.validate()) {
-
                           Map data = {
                             "username": usernameController.text,
                             "email": emailController.text,
@@ -157,17 +156,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           };
                           debugPrint(emailController.text);
                           debugPrint(passwordController.text);
-                          authViewModel.signupApi(data, context);
+                          // authViewModel.signupApi(data, context);
+                          authViewModel.signupApi(
+                              data, emailController.text, context);
                           print("api hit");
-                         
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      OTP(userData: emailController.text)));
+
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) =>
+                          //             OTP(userData: emailController.text)));
                         }
                       },
                       //loading:AuthViewModel.signupApi(data,context),
+                      loading: authViewModel.loading,
                       title: "Sign Up",
                     ),
                   ),
