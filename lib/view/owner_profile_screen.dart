@@ -1,21 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:instragram_clone/models/user_profile_model.dart';
 import 'package:instragram_clone/view/edit_profile.dart';
 import 'package:instragram_clone/view/followers_Screen.dart';
 import 'package:instragram_clone/view/following_Screen.dart';
 import 'package:instragram_clone/view/tabs/feed_view.dart';
 import 'package:instragram_clone/view/tabs/reels_view.dart';
 import 'package:instragram_clone/view/tabs/tagged_view.dart';
+import 'package:instragram_clone/view_model/user_view_model.dart';
 import 'package:instragram_clone/view_model/widget/Custom_drawer.dart';
 
 class OwnerProfile extends StatefulWidget {
-  const OwnerProfile({super.key});
+
+   const OwnerProfile({super.key});
+
 
   @override
   State<OwnerProfile> createState() => _OwnerProfileState();
 }
 
 class _OwnerProfileState extends State<OwnerProfile> {
+  UserViewModel userViewModel = UserViewModel();
+  late UserProfileModel userProfile;
+  @override
+  void initState() {
+    super.initState();
+   // debugPrint("****************in init state******************");
+  userViewModel.userProfileApi();
+  }
+
   final List<Widget> tabs = [
     const Tab(
       icon: Icon(
@@ -170,7 +183,9 @@ class _OwnerProfileState extends State<OwnerProfile> {
                       style: TextStyle(color: Colors.black),
                       children: <TextSpan>[
                         TextSpan(
-                          text: "Shahid\n",
+                          //text: "Shahid\n",
+                         // Text("Username: ${widget.userProfile.userPofile[0].username}"),
+                      
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,

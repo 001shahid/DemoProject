@@ -8,4 +8,6 @@ class AppUrl {
   static var forgetotpapi = '$baseUrl/api/v1/user/verify-otp';
   static var resetPasswordApi = '$baseUrl/api/v1/user/reset-password';
   static var logout = '$baseUrl/api/v1/user/logout';
+    static var createPost = '$baseUrl/api/v1/user/createPost';
+     static var getUserProfile = '$baseUrl/api/v1/user/user-profile';
 }

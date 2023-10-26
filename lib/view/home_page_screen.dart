@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:instragram_clone/view/comment_page_screen.dart';
+import 'package:instragram_clone/view/create_post.dart';
 import 'package:instragram_clone/view/owner_profile_screen.dart';
 import 'package:instragram_clone/view/search_page.dart';
 
@@ -12,6 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<bool> isFavoriteList = List.generate(8, (index) => false);
   bool isFavorite = false;
   int currentPage = 0;
   List<String> profileImages = [
@@ -69,6 +72,12 @@ class _HomePageState extends State<HomePage> {
           //Floating action button on Scaffold
           onPressed: () {
             //code to execute on button press
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      CreatePost()), // Replace with the screen you want to open
+            );
           },
           child: const Icon(Icons.add), //icon inside button
         ),
@@ -114,7 +123,9 @@ class _HomePageState extends State<HomePage> {
                   Icons.camera,
                   color: Colors.black,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  openCamera();
+                },
               ),
               IconButton(
                 icon: const Icon(
@@ -211,15 +222,16 @@ class _HomePageState extends State<HomePage> {
                                   IconButton(
                                     onPressed: () {
                                       setState(() {
-                                        isFavorite =
-                                            !isFavorite; // Toggle the favorite state
+                                        isFavoriteList[index] =
+                                            !isFavoriteList[index];
+                                        // Toggle the favorite state
                                       });
                                     },
                                     icon: Icon(
-                                      isFavorite
+                                      isFavoriteList[index]
                                           ? Icons.favorite
                                           : Icons.favorite_border,
-                                      color: isFavorite
+                                      color: isFavoriteList[index]
                                           ? Colors.red
                                           : Colors.black,
                                     ),
@@ -292,7 +304,7 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                               ),
-                              Divider(
+                              const Divider(
                                 thickness: 3,
                               )
                             ],
@@ -302,5 +314,14 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ));
+  }
+
+  Future<void> openCamera() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      // Handle the picked image, e.g., display or process it.
+    }
   }
 }

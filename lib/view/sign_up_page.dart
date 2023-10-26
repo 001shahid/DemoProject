@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:instragram_clone/provider/password_provider.dart';
 import 'package:instragram_clone/res/component/app_images.dart';
 import 'package:instragram_clone/res/component/elevatedbutton.dart';
 import 'package:instragram_clone/utils/routes/routes_name.dart';
-import 'package:instragram_clone/view/otp_page.dart';
-import 'package:instragram_clone/view_model/widget/auth_view_model.dart';
+import 'package:instragram_clone/view_model/auth_view_model.dart';
 import 'package:instragram_clone/view_model/widget/custom.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +25,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final FocusNode passwordFocus = FocusNode();
 
   final ScrollController _scrollController = ScrollController();
+  //  Password validation regex
+  final passwordRegex = RegExp(
+    r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$',
+  );
 
   @override
   void initState() {
@@ -49,8 +53,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   // Scroll to the currently focused field
+  // void _scrollToFocusedField() {
+  //   if (FocusScope.of(context).hasPrimaryFocus) return;
+  //   Future.delayed(Duration(milliseconds: 300), () {
+  //     _scrollController.animateTo(
+  //       _getOffset(),
+  //       duration: Duration(milliseconds: 300),
+  //       curve: Curves.easeInOut,
+  //     );
+  //   });
+  // }
   void _scrollToFocusedField() {
-    if (FocusScope.of(context).hasPrimaryFocus) return;
+    if (_formKey.currentState != null && !_formKey.currentState!.validate()) {
+      return;
+    }
     Future.delayed(Duration(milliseconds: 300), () {
       _scrollController.animateTo(
         _getOffset(),
@@ -127,17 +143,74 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.02,
                   ),
-                  CustomTextFormField(
-                    controller: passwordController,
-                    hintText: "Enter Password",
-                    prefixIcon: Icons.lock,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Please Enter your password";
-                      }
-                      return null;
+                  // CustomTextFormField(
+                  //   controller: passwordController,
+                  //   hintText: "Enter Password",
+                  //   prefixIcon: Icons.lock,
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return "Please Enter your password";
+                  //     }
+                  //     return null;
+                  //   },
+                  // ),
+                  // CustomTextFormField(
+                  //   controller: passwordController,
+                  //   hintText: "Enter Password",
+                  //   prefixIcon: Icons.lock,
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return "Please Enter your password";
+                  //     }
+
+                  //     // Password validation regex
+                  //     final passwordRegex = RegExp(
+                  //       r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$',
+                  //     );
+
+                  //     if (!passwordRegex.hasMatch(value)) {
+                  //       return "Password must contain at least one lowercase letter,\n one uppercase letter, one number, one special character, and be at least 6 characters long.";
+                  //     }
+
+                  //     return null;
+                  //   },
+                  // ),
+                  Consumer<PasswordVisibilityNotifier>(
+                    builder: (context, passwordVisibilityNotifier, child) {
+                      return CustomTextFormField(
+                        controller: passwordController,
+                        prefixIcon: Icons.lock,
+                        obscureText:
+                            !passwordVisibilityNotifier.isPassword1Visible,
+                        //  focusNode: passwordFocus,
+                        hintText: "Enter Password",
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please Enter your password";
+                          }
+                          if (!passwordRegex.hasMatch(value)) {
+                            return "Password must contain at least one lowercase letter,\n one uppercase letter, one number, one special character, and be at least 6 characters long.";
+                          }
+                          return null;
+                        },
+                        onTap: () {
+                          // passwordFocus.requestFocus();
+                        },
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            passwordVisibilityNotifier
+                                .togglePassword1Visibility();
+                          },
+                          child: Icon(
+                            passwordVisibilityNotifier.isPassword1Visible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                        ),
+                      );
                     },
                   ),
+
                   SizedBox(
                     // height: 20,
                     height: MediaQuery.of(context).size.height * 0.02,

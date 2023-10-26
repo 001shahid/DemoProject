@@ -15,6 +15,7 @@ class CustomTextFormField extends StatelessWidget {
   final Function(String)? onSubmitted;
   final String? Function(String?)? validator;
   final TextInputAction textInputAction;
+  final void Function(String)? onFieldSubmitted; // Add this parameter
 
   const CustomTextFormField({
     super.key,
@@ -22,7 +23,7 @@ class CustomTextFormField extends StatelessWidget {
     this.label,
     required this.controller,
     this.keyboardType = TextInputType.text,
-     this.prefixIcon,
+    this.prefixIcon,
     this.obscureText = false,
     this.onChanged,
     this.onSubmitted,
@@ -31,6 +32,7 @@ class CustomTextFormField extends StatelessWidget {
     this.focusNode,
     this.onTap,
     this.suffixIcon,
+    this.onFieldSubmitted,
   });
 
   @override
@@ -53,6 +55,7 @@ class CustomTextFormField extends StatelessWidget {
       ),
       onTap: onTap,
       validator: validator,
+  
       textInputAction: textInputAction,
     );
   }

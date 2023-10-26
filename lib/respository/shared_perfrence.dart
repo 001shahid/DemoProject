@@ -2,11 +2,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesManager {
   static const String loginTokenKey = 'login_token';
+  static const String userIdKey = 'user_id_key';
   static const String resetPasswordTokenKey = 'reset_password_token';
 
   static Future<void> saveLoginToken(String token) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(loginTokenKey, token);
+  }
+
+  static Future<void> saveUserId(String userId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(userIdKey, userId);
+  }
+
+  static Future<String?> getUSerId() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(userIdKey);
   }
 
   static Future<String?> getLoginToken() async {

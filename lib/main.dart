@@ -28,10 +28,8 @@ import 'package:instragram_clone/provider/auth_provider.dart';
 import 'package:instragram_clone/provider/image_delete.dart';
 import 'package:instragram_clone/provider/password_provider.dart';
 import 'package:instragram_clone/utils/routes/routes.dart';
-import 'package:instragram_clone/view/create_post.dart';
-import 'package:instragram_clone/view/home_page_screen.dart';
-import 'package:instragram_clone/view/sign_up_page.dart';
-import 'package:instragram_clone/view_model/widget/auth_view_model.dart';
+import 'package:instragram_clone/view/splash_screen.dart';
+import 'package:instragram_clone/view_model/auth_view_model.dart';
 import 'package:provider/provider.dart';
 
 late Size mq;
@@ -76,7 +74,7 @@ class _MyAppState extends State<MyApp> {
             useMaterial3: true,
           ),
           debugShowCheckedModeBanner: false,
-          home: SignUpScreen(),
+          home: const SpalshScreen(),
           //initialRoute:  TutorialScreen1() ,
           onGenerateRoute: Routes.MaterialPageRoutegenerateRoute),
     );

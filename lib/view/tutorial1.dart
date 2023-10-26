@@ -35,6 +35,8 @@
 //   }
 // }
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:instragram_clone/view/home_page_screen.dart';
 import 'package:instragram_clone/view/sign_up_page.dart';
 
 import 'package:introduction_screen/introduction_screen.dart';
@@ -56,8 +58,12 @@ class _TutorialScreen1State extends State<TutorialScreen1> {
         showNextButton: false,
         showDoneButton: true,
         onDone: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => SignUpScreen()));
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => SignUpScreen()),
+              (route) => false);
+          // Navigator.push(
+          //     context, MaterialPageRoute(builder: (context) => SignUpScreen()));
         },
 
         done: const Text("Let's Start",
@@ -75,7 +81,13 @@ class _TutorialScreen1State extends State<TutorialScreen1> {
                 ), // Add space before the title
                 Text(
                   "Connect With the People around you",
-                  style: TextStyle(fontSize: 24, color: Colors.black),
+                  style: GoogleFonts.pacifico(
+                    // Use the cursive font style
+                    textStyle: const TextStyle(
+                      fontSize: 24, // Adjust font size as needed
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.02,
@@ -96,9 +108,13 @@ class _TutorialScreen1State extends State<TutorialScreen1> {
                   height: MediaQuery.of(context).size.height * 0.09,
                 ), // Add space before the title
                 Text(
-                  "Connect With the People around you",
-                  style: TextStyle(
-                    fontSize: 24,
+                  "Stay Connected Anywhere",
+                  style: GoogleFonts.pacifico(
+                    // Use the cursive font style
+                    textStyle: const TextStyle(
+                      fontSize: 24, // Adjust font size as needed
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -119,9 +135,13 @@ class _TutorialScreen1State extends State<TutorialScreen1> {
                   height: MediaQuery.of(context).size.height * 0.09,
                 ), // Add space before the title
                 Text(
-                  "Connect With the People around you",
-                  style: TextStyle(
-                    fontSize: 24,
+                  "Discover New Places",
+                  style: GoogleFonts.pacifico(
+                    // Use the cursive font style
+                    textStyle: const TextStyle(
+                      fontSize: 25, // Adjust font size as needed
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 SizedBox(

@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:instragram_clone/res/component/app_images.dart';
 import 'package:instragram_clone/res/component/elevatedbutton.dart';
 import 'package:instragram_clone/utils/utils.dart';
-import 'package:instragram_clone/view_model/widget/auth_view_model.dart';
+import 'package:instragram_clone/view_model/auth_view_model.dart';
 import 'package:instragram_clone/view_model/widget/custom.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pinput/pinput.dart';

@@ -1,28 +1,21 @@
-// import 'package:flutter/material.dart';
-// //import 'package:flutter_application_1/model/user_model.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:instragram_clone/respository/user_profile_repository.dart';
+import 'package:instragram_clone/utils/utils.dart';
 
-// class UserViewModel with ChangeNotifier {
-//   Future<bool> saveUser(UserModel user) async {
-//     final SharedPreferences sp = await SharedPreferences.getInstance();
-//     sp.setString('token', user.Token.toString());
-//     sp.setString('token', user.username.toString());
-//     notifyListeners();
-//     return true;
-//   }
+class UserViewModel with ChangeNotifier {
+  final _myRepo = UserProfileRepository();
+  Future<void> userProfileApi() async {
+   debugPrint("in User profile Api");
+    _myRepo.getUserProfileApi().then((value) {
+     // debugPrint("in User getUserProfileApi");
+     // debugPrint(value.toString());
 
-//   Future<UserModel> getUser() async {
-//     final SharedPreferences sp = await SharedPreferences.getInstance();
-//     final String? token = sp.getString('token');
-
-//     return UserModel(Token: token.toString());
-
-//     //void remove
-//   }
-
-//    Future<bool> remove() async {
-//     final SharedPreferences sp = await SharedPreferences.getInstance();
-//      return sp.clear();
-//   }
-// }
+      if (kDebugMode) {}
+    }).onError((error, stackTrace) {
+      debugPrint("error:-");
+      debugPrint(error.toString());
+      if (kDebugMode) {}
+    });
+  }
+}

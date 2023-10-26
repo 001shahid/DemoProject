@@ -6,8 +6,8 @@ import 'package:instragram_clone/respository/shared_perfrence.dart';
 import 'package:instragram_clone/utils/routes/routes_name.dart';
 import 'package:instragram_clone/view/home_page_screen.dart';
 import 'package:instragram_clone/view/otp_page.dart';
-import '../../respository/auth_respository.dart';
-import '../../utils/utils.dart';
+import '../respository/auth_respository.dart';
+import '../utils/utils.dart';
 
 class AuthViewModel with ChangeNotifier {
   //final String apiUrl = "https://example.com/api/signup";
@@ -72,7 +72,7 @@ class AuthViewModel with ChangeNotifier {
         // Navigate to the next screen after OTP verification
         // Navigator.pushNamed(context, RoutesName.home);
         Navigator.pushNamedAndRemoveUntil(
-            context, RoutesName.home, (route) => false);
+            context, RoutesName.login, (route) => false);
       } else {
         Utils.flashBarErrorMessage('Invalid OTP. Please try again.', context);
       }
@@ -199,21 +199,128 @@ class AuthViewModel with ChangeNotifier {
   }
 
   //***************************************LogoutApi*********************************************//
+  // Future<void> logout(BuildContext context) async {
+  //   String? authToken = await SharedPreferencesManager.getLoginToken();
+  //   setLoading(true);
+  //   debugPrint(authToken.toString());
+  //   try {
+  //     await _myRepo.logoutApi(authToken);
+  //     //Utils.flashBarErrorMessage("Logout Successfully", context);
+
+  //     // Navigate to the login screen after successful logout
+  //     Navigator.pushNamedAndRemoveUntil(
+  //         context, RoutesName.login, (routes) => false);
+
+  //     setLoading(false);
+  //   } catch (error) {
+  //     setLoading(false);
+  //     Utils.flashBarErrorMessage('Error during logout: $error', context);
+  //     if (kDebugMode) {
+  //       print(error.toString());
+  //     }
+  //   }
+  // }
+  // Future<void> logout(BuildContext context) async {
+  //   String? authToken = await SharedPreferencesManager.getLoginToken();
+  //   setLoading(true);
+  //   //-----------------------------authToken---------------------------//
+  //   debugPrint(
+  //       "-----------------------------authToken1---------------------------");
+  //   debugPrint(authToken);
+  //   debugPrint(
+  //       "-----------------------------SharedauthToken1---------------------------");
+  //   String? s1 = await SharedPreferencesManager.getResetPasswordToken();
+  //   debugPrint(s1);
+
+  //   try {
+  //     await _myRepo.logoutApi(authToken);
+  //     // Utils.flashBarErrorMessage("Logout Successfully", context);
+
+  //     // Navigate to the login screen after successful logout
+  //     SharedPreferencesManager.deleteLoginToken();
+  //     debugPrint(
+  //         "-----------------------------authToken2---------------------------");
+  //     debugPrint(authToken);
+  //     debugPrint(
+  //         "-----------------------------SharedauthToken2---------------------------");
+  //     String? s2 = await SharedPreferencesManager.getResetPasswordToken();
+  //     debugPrint(s2);
+  //     Navigator.pushNamedAndRemoveUntil(
+  //         context, RoutesName.login, (routes) => false);
+
+  //     setLoading(false);
+  //   } catch (error) {
+  //     setLoading(false);
+  //     Utils.flashBarErrorMessage('Error during logout: $error', context);
+  //     if (kDebugMode) {
+  //       print(error.toString());
+  //     }
+  //   }
+  // }
   Future<void> logout(BuildContext context) async {
+    // Retrieve the authentication token from shared preferences.
     String? authToken = await SharedPreferencesManager.getLoginToken();
+
+    // Set loading state to indicate the logout process has started.
     setLoading(true);
 
     try {
+      debugPrint(
+          "------------------------------authToken1--------------------------");
+      String? s2 = await SharedPreferencesManager.getLoginToken();
+      debugPrint(s2);
+      // Delete the token from shared preferences first.
+      SharedPreferencesManager.deleteLoginToken();
+
+      // Now, perform the logout action (if any).
       await _myRepo.logoutApi(authToken);
 
-      // Navigate to the login screen after successful logout
+      // At this point, 'authToken' should be deleted, and any debugPrint will show it as null.
+      debugPrint(
+          "------------------------------authToken2--------------------------");
+      String? s1 = await SharedPreferencesManager.getLoginToken();
+      debugPrint(s1);
+
+      // Navigate to the login screen after successful logout.
       Navigator.pushNamedAndRemoveUntil(
           context, RoutesName.login, (routes) => false);
+
+      // Set loading state to indicate the logout process is complete.
+      setLoading(false);
+    } catch (error) {
+      // If there's an error during logout, handle it and display an error message.
+      setLoading(false);
+      Utils.flashBarErrorMessage('Error during logout: $error', context);
+      if (kDebugMode) {
+        print(error.toString());
+      }
+    }
+  }
+  //***************************************CreatePostApi*********************************************//
+
+  Future<void> createPost(dynamic data, BuildContext context) async {
+    setLoading(true);
+
+    try {
+      // Create a map containing the post data to be sent to the API
+      // Map<String, dynamic> postData = {
+      //   "url": url,
+      //   "caption": caption,
+      //   "mediaType": mediaType,
+      // };
+
+      // Call your API endpoint to create a new post (replace 'createPostApi' with your actual API endpoint)
+      await _myRepo.createPostApi(data);
+
+      // Perform any necessary actions after the post is successfully created
+      // For example, navigate to the home page
+      Navigator.pushNamedAndRemoveUntil(
+          context, RoutesName.home, (routes) => false);
 
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      Utils.flashBarErrorMessage('Error during logout: $error', context);
+      Utils.flashBarErrorMessage('Error creating post: $error', context);
       if (kDebugMode) {
         print(error.toString());
       }

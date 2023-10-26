@@ -40,7 +40,6 @@ class AuthRepository {
       rethrow;
     }
   }
- 
 
   //***************************************ResendOtpApi*********************************************//
   Future<void> resendOtpApi(dynamic data) async {
@@ -60,9 +59,12 @@ class AuthRepository {
       if (response is Map<String, dynamic>) {
         // If the response is already a Map, no need to parse it
         final String accessToken = response['data']['accessToken'];
+        debugPrint("-----------userId---------------");
+        String userId = response['data']['user']["_id"];
+        //  final String userId = response['data']['accessToken'];
         debugPrint(response.toString());
-        debugPrint("--------------------------");
         SharedPreferencesManager.saveLoginToken(accessToken);
+        SharedPreferencesManager.saveUserId(userId);
         String? loginToken = await SharedPreferencesManager.getLoginToken();
         // debugPrint(accessToken.toString());
         debugPrint("------***************----************---------------");
@@ -92,7 +94,6 @@ class AuthRepository {
 
   //***************************************VerifyOtpApi*********************************************//
 
- 
   Future<bool> verifyOtpApiforget(dynamic data) async {
     try {
       // Replace 'AppUrl.verifyOtpApi' with your actual OTP verification API endpoint
@@ -122,7 +123,7 @@ class AuthRepository {
   }
 
   //***************************************ResetPasswordApi*********************************************//
- 
+
   Future<dynamic> resetPasswordApi(
     dynamic data,
   ) async {
@@ -147,24 +148,46 @@ class AuthRepository {
       rethrow;
     }
   }
-    //***************************************LogoutApi*********************************************//
-    Future<void> logoutApi(String? authToken) async {
-       String? authToken = await SharedPreferencesManager.getLoginToken();
+
+  //***************************************LogoutApi*********************************************//
+
+  Future<void> logoutApi(String? authToken) async {
+    if (authToken == null) {
+      print("No authToken found.");
+      return;
+    }
+
     try {
-      // Call your logout API endpoint here, passing the Bearer token in the header
-      await _apiServices.getPostApiResponse(
-        AppUrl.logout, // Replace with your logout API endpoint
-        null,
+      // ...
+    } catch (error) {
+      // ...
+    }
+  }
+  //***************************************CreatePostApi*********************************************//
+
+  Future<void> createPostApi(dynamic data) async {
+    String? authToken = await SharedPreferencesManager.getLoginToken();
+
+    try {
+      debugPrint("--------------@@@@@@@@@@@@@@@@---------");
+      debugPrint(authToken);
+      // Send a POST request to the create post API endpoint
+      dynamic response = await _apiServices.getPostApiResponse(
+        AppUrl.createPost, // Replace with your create post API endpoint
+        data, // Convert data to JSON
         header: {
           "Content-Type": "application/json; charset=UTF-8",
-          "Authorization": "Bearer $authToken",
+          "Authorization":
+              "Bearer $authToken", // Add the authentication token here
         },
       );
+
+      // Handle the response as needed (parsing, error handling, etc.)
+      debugPrint("Create Post API Response: $response");
     } catch (error) {
       // Handle error if needed
-      print("Error during logout API call: $error");
+      print("Error during create post API call: $error");
       rethrow;
     }
   }
-
 }

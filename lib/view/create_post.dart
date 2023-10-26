@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:instragram_clone/res/component/elevatedbutton.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:instragram_clone/view_model/auth_view_model.dart';
+import 'package:provider/provider.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({Key? key}) : super(key: key);
@@ -17,6 +19,7 @@ class _CreatePostState extends State<CreatePost> {
   @override
   Widget build(BuildContext context) {
     final TextEditingController searchController = TextEditingController();
+    final authViewModel = Provider.of<AuthViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 112, 180, 235),
@@ -75,7 +78,22 @@ class _CreatePostState extends State<CreatePost> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.03,
             ),
-            CustomRoundButton(title: "Post", onPress: () {})
+            CustomRoundButton(
+                title: "Post",
+                onPress: () {
+                  Map data = {
+                    "url": "gfhjklgcvbnm,",
+                    "mediaType": "image",
+                    "caption": "fcghvjbknkm,"
+                  };
+                  // {
+                  //   "url": "abcdserdtfghjk,",
+                  //   "mediaType": "image",
+                  //   "caption": "dtrfghjk"
+                  // };
+                  debugPrint("api hit");
+                  authViewModel.createPost(data, context);
+                })
           ],
         ),
       ),

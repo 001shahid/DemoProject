@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:instragram_clone/respository/shared_perfrence.dart';
 import 'package:instragram_clone/view/home_page_screen.dart';
 import 'package:instragram_clone/view/login_page.dart';
 import 'package:instragram_clone/view/owner_profile_screen.dart';
-import 'package:instragram_clone/view_model/widget/auth_view_model.dart';
+import 'package:instragram_clone/view_model/auth_view_model.dart';
 import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -145,6 +146,7 @@ class CustomDrawer extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
+                        //SharedPreferencesManager.deleteLoginToken();
                         authViewModel.logout(context);
 
                         // Perform logout logic here
